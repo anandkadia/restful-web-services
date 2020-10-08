@@ -3,6 +3,7 @@ package com.anandkadia.rest.webservices.restfulwebservices.user;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class UserResource {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity<Object> createUser(@RequestBody User user) {
+	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
 
 		User savedUser = service.save(user);
 
@@ -51,9 +52,9 @@ public class UserResource {
 
 	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		
+
 		User user = service.deletebyId(id);
-		
+
 		if (user == null)
 			throw new UserNotFoundException("id-" + id);
 	}
